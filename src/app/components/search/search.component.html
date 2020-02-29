@@ -1,3 +1,8 @@
-<p>
-  search works!
-</p>
+<input type="text"
+       [(ngModel)]="pattern"
+       (keyup.enter)="search()"
+       placeholder="GitHub user name or login...">
+
+<ul *ngIf="users$ | async as users">
+  <li *ngFor="let user of users" (click)="selectUser(user)">{{ user.login }}</li>
+</ul>

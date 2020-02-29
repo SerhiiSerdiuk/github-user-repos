@@ -101,12 +101,23 @@
       100
     ],
     "no-commented-out-code": true,
-    "no-duplicate-string": [true, 5],
+    "no-duplicate-string": [
+      true,
+      5
+    ],
     "noImpicitAny": true,
     "noImplicitReturns": true,
     "strictFunctionTypes": true,
     "noUnusedParameters": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-leading-underscore",
+        "allow-pascal-case"
+      ]
+    }
   },
   "rulesDirectory": [
     "codelyzer"

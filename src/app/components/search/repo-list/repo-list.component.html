@@ -1,3 +1,6 @@
-<p>
-  repos works!
-</p>
+<p>repos:</p>
+
+<ul *ngIf="repositories$ | async as repositories">
+  <li *ngFor="let repo of repositories" (click)="selectRepository(repo)">{{ repo.name }}</li>
+</ul>
+
