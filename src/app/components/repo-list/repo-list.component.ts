@@ -2,8 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ModelService } from 'src/app/services/model.service';
-import { Repository } from 'src/app/model/entities';
+import { ModelService } from '../../services/model.service';
+import { Repository } from '../../model/entities';
 
 @Component({
   selector: 'app-repo-list',

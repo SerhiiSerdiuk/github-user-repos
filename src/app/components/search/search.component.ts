@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 
-import { ModelService } from 'src/app/services/model.service';
-import { User, UserList } from 'src/app/model/entities';
+import { ModelService } from '../../services/model.service';
+import { User, UserList } from '../../model/entities';
 
 @Component({
   selector: 'app-search',

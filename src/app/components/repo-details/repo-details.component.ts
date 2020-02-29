@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModelService } from 'src/app/services/model.service';
-import { Repository } from 'src/app/model/entities';
+import { ModelService } from '../../services/model.service';
+import { Repository } from '../../model/entities';
 
 @Component({
   selector: 'app-repo-details',
