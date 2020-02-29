@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { UserList, Repository } from '../model/entities';
+import { UserList, Repository, User } from '../model/entities';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,6 +14,11 @@ export class DataService {
   });
 
   constructor(private http: HttpClient) {}
+
+  public getUser(userLogin: string): Observable<User> {
+    const url = this._githubApiUrl + 'users/' + userLogin;
+    return this.http.get<User>(url, { headers: this._headers });
+  }
 
   public searchUsers(pattern: string): Observable<UserList> {
     const url = this._githubApiUrl + 'search/users';

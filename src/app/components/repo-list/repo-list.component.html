@@ -1,6 +1,43 @@
-<p>repos:</p>
+<form [formGroup]="repoFormGroup">
+  <label>
+    Filter
+    <input type="text"
+           pInputText
+           formControlName="filter">
+  </label>
+  <label>
+    Sort
+    <p-dropdown [options]="sortOptions"
+                formControlName="sortBy">
+    </p-dropdown>
+  </label>
+</form>
 
-<ul *ngIf="repositories$ | async as repositories">
-  <li *ngFor="let repo of repositories" (click)="selectRepository(repo)">{{ repo.name }}</li>
+<div *ngIf="user$ | async as user"
+     class="user">
+  <img [src]="user.avatar_url"
+       alt=""
+       class="user__img">
+  <span class="user__name">{{ user.login }}</span>
+</div>
+
+<ul>
+  <li *ngFor="let repo of repositories$ | async"
+      (click)="selectRepository(repo)">
+    <div class="repo">
+      <div class="repo__title">
+        {{ repo.name }}
+      </div>
+      <div class="repo__details">
+
+      </div>
+      <div class="repo__date">
+        {{ repo.updated_at | date }}
+      </div>
+      <div class="repo__rating">
+      </div>
+    </div>
+  </li>
 </ul>
 
+<p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
