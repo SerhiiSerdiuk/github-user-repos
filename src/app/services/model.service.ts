@@ -28,7 +28,8 @@ export class ModelService {
       .map(([key, userLists]) => userLists.items)
       .reduce((acc, val) => acc.concat(val), []);
 
-    const user = users && users.length ? users.find((u) => u.login === userLogin) : null;
+    const user =
+      users && users.length ? users.find(u => u.login === userLogin) : null;
 
     return user ? of(user) : this.dataService.getUser(userLogin);
   }

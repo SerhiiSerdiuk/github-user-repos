@@ -43,7 +43,7 @@ export class RepoListComponent implements OnInit {
     filter: string
   ): Repository[] | null {
     return repositories
-      ? repositories.filter(r => r.name.includes(filter))
+      ? repositories.filter(r => r.name.toLowerCase().includes(filter))
       : null;
   }
 
@@ -101,10 +101,10 @@ export class RepoListComponent implements OnInit {
         ]).pipe(
           map(([{ filter, sortBy }, repositories]) => {
             let newRepositories = repositories;
-            if (filter) {
+            if (filter.trim()) {
               newRepositories = this._filterRepositories(
                 newRepositories,
-                filter
+                filter.trim().toLowerCase()
               );
             }
             if (sortBy === 'date') {

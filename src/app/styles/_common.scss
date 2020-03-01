@@ -3,25 +3,3 @@ ul {
   padding: 0;
   list-style: none;
 }
-
-.user {
-  display: flex;
-  align-items: center;
-  padding: 6px 12px;
-
-  &__img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-  }
-
-  &__name {
-    margin-left: 12px;
-    font-size: 1.6rem;
-  }
-}
-
-.ui-progress-spinner {
-  width: 50px;
-  height: 50px;
-}

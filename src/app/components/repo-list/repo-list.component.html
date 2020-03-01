@@ -1,43 +1,51 @@
-<form [formGroup]="repoFormGroup">
-  <label>
-    Filter
-    <input type="text"
-           pInputText
-           formControlName="filter">
-  </label>
-  <label>
-    Sort
-    <p-dropdown [options]="sortOptions"
-                formControlName="sortBy">
-    </p-dropdown>
-  </label>
-</form>
-
 <div *ngIf="user$ | async as user"
      class="user">
   <img [src]="user.avatar_url"
-       alt=""
+       alt="User avatar"
        class="user__img">
   <span class="user__name">{{ user.login }}</span>
 </div>
-
-<ul>
-  <li *ngFor="let repo of repositories$ | async"
-      (click)="selectRepository(repo)">
-    <div class="repo">
-      <div class="repo__title">
-        {{ repo.name }}
+<section class="repo">
+  <h2 class="repo__header">
+    Repositories <span class="repo__count">{{(repositories$ | async)?.length}}</span>
+  </h2>
+  <form [formGroup]="repoFormGroup"
+        class="repo__form">
+    <label class="form__label">
+      <span>Filter</span>
+      <input type="text"
+             pInputText
+             formControlName="filter">
+    </label>
+    <label class="form__label">
+      <span>Sort by</span>
+      <p-dropdown [options]="sortOptions"
+                  formControlName="sortBy">
+      </p-dropdown>
+    </label>
+  </form>
+  <ul class="repo__list">
+    <li *ngFor="let repo of repositories$ | async"
+        class="repo__item">
+      <div class="repo__tile">
+        <div class="repo__title"
+             (click)="selectRepository(repo)"
+             tabindex="0">
+          {{ repo.name }}
+        </div>
+        <div class="repo__description">
+          {{ repo.description }}
+        </div>
+        <div class="repo__details">
+          <div class="repo__rating">
+            <i class="pi pi-star"></i>{{ repo.stargazers_count }}
+          </div>
+          <span class="repo__date">
+            Updated on {{ repo.updated_at | date:'dd MMM yyyy' }}
+          </span>
+        </div>
       </div>
-      <div class="repo__details">
-
-      </div>
-      <div class="repo__date">
-        {{ repo.updated_at | date }}
-      </div>
-      <div class="repo__rating">
-      </div>
-    </div>
-  </li>
-</ul>
-
-<p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
+    </li>
+  </ul>
+  <p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
+</section>
