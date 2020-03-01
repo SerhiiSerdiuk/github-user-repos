@@ -1,0 +1,103 @@
+:host {
+  display: block;
+  margin: 0 auto;
+  max-width: 992px;
+  padding: 16px;
+}
+
+.repo__header {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+
+  .header__link {
+    color: var(--c-link);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &--accent {
+      font-weight: 600;
+    }
+  }
+
+  .header__divider {
+    padding: 0 4px;
+  }
+}
+
+.repo__description,
+.desc__editor {
+  margin-bottom: 16px;
+}
+
+.repo__description {
+  color: var(--c-text-second);
+
+  .desc__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.desc__editor {
+  display: flex;
+
+  .editor__input {
+    flex: 1 1 auto;
+    margin-right: 16px;
+  }
+
+  .editor__actions {
+    flex: 0 0 auto;
+
+    & > *:not(:last-child) {
+      margin-right: 16px;
+    }
+  }
+}
+
+.repo__warning {
+  color: var(--c-danger);
+  font-size: 1.4rem;
+  margin-top: 8px;
+}
+
+.repo__download {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.repo__readme {
+  border: 1px solid var(--c-border);
+  border-radius: 3px;
+
+  .readme__header {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 8px 16px;
+    background-color: var(--c-bg-beta);
+    border-bottom: 1px solid var(--c-border);
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .readme__content {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .desc__editor {
+    flex-direction: column;
+
+    .editor__actions {
+      margin-top: 16px;
+    }
+  }
+}

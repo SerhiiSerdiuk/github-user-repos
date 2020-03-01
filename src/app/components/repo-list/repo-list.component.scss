@@ -13,16 +13,30 @@
   width: auto;
   max-width: 272px;
   padding-right: 40px;
+  transition: all .25s;
 
   &__img {
     height: auto;
     width: 100%;
   }
 
+  &__details {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__name {
     margin-top: 20px;
     font-size: 2.6rem;
     line-height: 3rem;
+    font-weight: 500;
+  }
+
+  &__login {
+    color: var(--c-text-second);
+    font-size: 2rem;
+    line-height: 2.4rem;
+    font-weight: 300;
   }
 }
 
@@ -32,6 +46,7 @@
 
 .repo__form {
   display: flex;
+  justify-content: flex-end;
   flex-wrap: wrap;
 
   .form__label {
@@ -40,8 +55,8 @@
     flex-wrap: nowrap;
     color: var(--c-text);
     font-size: 1.4rem;
-    margin-right: 15px;
-    margin-top: 15px;
+    margin-left: 15px;
+    margin-bottom: 15px;
 
     span {
       padding-right: 6px;
@@ -52,23 +67,29 @@
 .repo__header {
   display: flex;
   align-items: center;
-  margin: 0;
-  font-weight: 500;
-  font-size: 18px;
+
+  h2 {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin-bottom: 15px;
+    font-weight: 500;
+    font-size: 2.4rem;
+  }
 }
 
 .repo__count {
   display: inline-block;
   background-color: #eaeaea;
-  border-radius: 50%;
+  border-radius: 2rem;
   font-weight: 400;
-  font-size: 12px;
-  padding: 2px 5px;
+  font-size: 1.6rem;
+  padding: 2px 8px;
   margin-left: 8px;
 }
 
 .repo__list {
-  margin-top: 20px;
 }
 
 .repo__item {
@@ -124,16 +145,29 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .repo__header {
+    flex-direction: column;
+
+    & > * {
+      width: 100%;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   :host {
     flex-direction: column;
   }
 
   .user {
+    min-width: 100%;
+    padding: 0;
     flex-direction: row;
     margin-bottom: 30px;
 
-    &__name {
+    &__name,
+    &__login {
       margin: 0 10px;
     }
 
@@ -149,7 +183,7 @@
     flex-direction: column;
 
     .form__label {
-      margin-right: 0;
+      margin-left: 0;
       & > *:not(span) {
         flex: 1 1 auto;
       }

@@ -36,7 +36,6 @@ export class SearchComponent implements OnInit {
         pluck('items'),
         tap(() => {
           this.isLoading = false;
-          this.pattern = '';
         })
       );
     } else {

@@ -1,4 +1,76 @@
-<p>
-  repo-details works!
-</p>
-{{ repository?.name }}
+<ng-container *ngIf="repository$ | async as repository">
+
+  <div class="repo__header">
+    <a class="header__link"
+       [routerLink]="'/repositories/' + repository.owner.login">
+      {{ repository.owner.login }}
+    </a>
+    <span class="header__divider">/</span>
+    <a class="header__link header__link--accent"
+       [routerLink]="'/repository/' + repository.owner.login + '/' + repository.name">
+      {{ repository.name }}
+    </a>
+  </div>
+
+  <div *ngIf="!isEditModeOn; else editTemplate"
+       class="repo__description">
+    <div class="desc__wrapper">
+      <div class="desc__content"
+           (click)="switchToEditMode()">
+        {{ description || repository.description }}
+      </div>
+      <button pButton
+              type="button"
+              label="Edit"
+              (click)="switchToEditMode()">
+      </button>
+    </div>
+    <div class="repo__warning"
+         *ngIf="description && repository.description !== description">
+      The latest updates weren’t saved
+    </div>
+  </div>
+  <ng-template #editTemplate>
+    <div class="desc__editor">
+      <input class="editor__input"
+             type="text"
+             pInputText
+             autofocus
+             [ngModel]="description || repository.description"
+             (ngModelChange)="updateDescription($event)">
+      <div class="editor__actions">
+        <button pButton
+                type="button"
+                label="Save"
+                (click)="saveDescription(repository)">
+        </button>
+        <button pButton
+                type="reset"
+                label="Cancel"
+                class="ui-button-secondary"
+                (click)="cancelEditDescription(repository)">
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class="repo__download">
+    <button pButton
+            type="button"
+            icon="pi pi-download"
+            iconPos="left"
+            label="Download ZIP"
+            (click)="downloadZip(repository.owner.login, repository.name)">
+    </button>
+  </div>
+
+  <div class="repo__readme">
+    <h2 class="readme__header"><i class="pi pi-file-o"></i>&nbsp;README.md</h2>
+    <div class="readme__content">
+      <markdown *ngIf="readMe$ | async as readMe"
+                [src]="readMe.download_url">
+      </markdown>
+    </div>
+  </div>
+
+</ng-container>

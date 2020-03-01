@@ -3,27 +3,30 @@
   <img [src]="user.avatar_url"
        alt="User avatar"
        class="user__img">
-  <span class="user__name">{{ user.login }}</span>
+  <div class="user__details">
+    <div class="user__name">{{ user.name }}</div>
+    <div class="user__login">{{ user.login }}</div>
+  </div>
 </div>
 <section class="repo">
-  <h2 class="repo__header">
-    Repositories <span class="repo__count">{{(repositories$ | async)?.length}}</span>
-  </h2>
-  <form [formGroup]="repoFormGroup"
-        class="repo__form">
-    <label class="form__label">
-      <span>Filter</span>
-      <input type="text"
-             pInputText
-             formControlName="filter">
-    </label>
-    <label class="form__label">
-      <span>Sort by</span>
-      <p-dropdown [options]="sortOptions"
-                  formControlName="sortBy">
-      </p-dropdown>
-    </label>
-  </form>
+  <div class="repo__header">
+    <h2>Repositories <span class="repo__count">{{ totalRepositories }}</span></h2>
+    <form [formGroup]="repoFormGroup"
+          class="repo__form">
+      <label class="form__label">
+        <span>Filter</span>
+        <input type="text"
+               pInputText
+               formControlName="filter">
+      </label>
+      <label class="form__label">
+        <span>Sort by</span>
+        <p-dropdown [options]="sortOptions"
+                    formControlName="sortBy">
+        </p-dropdown>
+      </label>
+    </form>
+  </div>
   <ul class="repo__list">
     <li *ngFor="let repo of repositories$ | async"
         class="repo__item">

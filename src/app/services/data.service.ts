@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { UserList, Repository, User } from '../model/entities';
+import { UserList, Repository, User, RepoReadMe } from '../model/entities';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -26,8 +26,18 @@ export class DataService {
     return this.http.get<UserList>(url, { headers: this._headers, params });
   }
 
+  public getRepository(userLogin: string, repoName: string): Observable<Repository> {
+    const url = `${this._githubApiUrl}repos/${userLogin}/${repoName}`;
+    return this.http.get<Repository>(url, { headers: this._headers });
+  }
+
   public getRepositories(userLogin: string): Observable<Repository[]> {
     const url = `${this._githubApiUrl}users/${userLogin}/repos`;
     return this.http.get<Repository[]>(url, { headers: this._headers });
+  }
+
+  public getRepoReadMe(userLogin: string, repoName: string): Observable<RepoReadMe> {
+    const url = `${this._githubApiUrl}repos/${userLogin}/${repoName}/readme`;
+    return this.http.get<RepoReadMe>(url, { headers: this._headers });
   }
 }

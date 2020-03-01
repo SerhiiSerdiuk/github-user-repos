@@ -23,6 +23,7 @@ import { Repository, User } from '../../model/entities';
 export class RepoListComponent implements OnInit {
   public repositories$: Observable<Repository[] | null>;
   public user$: Observable<User | null>;
+  public totalRepositories = 0;
   public isLoading = false;
 
   public repoFormGroup = this.fb.group({ filter: '', sortBy: 'title' });
@@ -101,6 +102,8 @@ export class RepoListComponent implements OnInit {
         ]).pipe(
           map(([{ filter, sortBy }, repositories]) => {
             let newRepositories = repositories;
+            this.totalRepositories = repositories ? repositories.length : 0;
+
             if (filter.trim()) {
               newRepositories = this._filterRepositories(
                 newRepositories,

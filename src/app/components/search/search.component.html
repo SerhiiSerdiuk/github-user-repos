@@ -1,22 +1,30 @@
-<input type="text"
-       pInputText
-       [(ngModel)]="pattern"
-       (keyup.enter)="search(pattern)"
-       placeholder="Find a user..."
-       autofocus>
+<div class="search__header">
+  <input type="text"
+         pInputText
+         [(ngModel)]="pattern"
+         (keyup.enter)="search(pattern)"
+         placeholder="Find a GitHub user..."
+         autofocus>
+
+  <button pButton
+          type="button"
+          label="Search"
+          (click)="search(pattern)">
+  </button>
+</div>
 
 <ul *ngIf="users$ | async as users">
-   <li *ngFor="let user of users"
-       (click)="selectUser(user)"
-       (keyup.enter)="selectUser(user)"
-       tabindex="0">
-      <div class="user">
-         <img [src]="user.avatar_url"
-              alt=""
-              class="user__img">
-         <span class="user__name">{{ user.login }}</span>
-      </div>
-   </li>
+  <li *ngFor="let user of users"
+      (click)="selectUser(user)"
+      (keyup.enter)="selectUser(user)"
+      tabindex="0">
+    <div class="user">
+      <img [src]="user.avatar_url"
+           alt=""
+           class="user__img">
+      <span class="user__name">{{ user.login }}</span>
+    </div>
+  </li>
 </ul>
 
 <p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
