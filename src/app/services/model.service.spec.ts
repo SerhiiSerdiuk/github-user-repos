@@ -15,7 +15,8 @@ describe('Service: Model', () => {
       'searchUsers',
       'getRepository',
       'getRepositories',
-      'getRepoReadMe'
+      'getRepoReadMe',
+      'updateRepository'
     ]);
 
     TestBed.configureTestingModule({
@@ -88,9 +89,13 @@ describe('Service: Model', () => {
     const repositories1$ = service.getRepositories('user_1');
     expect(repositories1$).toBeObservable(expectedRepositories$);
 
-    service.userRepositoriesMap.set('user_1', expectedRepositories);
+    const repoMap = new Map().set('repo_1', expectedRepositories[0]);
+    service.userRepositoriesMap.set('user_1', repoMap);
     service.getRepositories('user_1');
-    expect(dataServiceSpy.getRepositories.calls.count()).toBe(1, 'request to the server should be only one');
+    expect(dataServiceSpy.getRepositories.calls.count()).toBe(
+      1,
+      'request to the server should be only one'
+    );
   });
 
   it('getReadMe should return stubbed repository README response', () => {
@@ -111,5 +116,30 @@ describe('Service: Model', () => {
 
     const readMeWithoutRepo$ = service.getReadMe('user', null);
     expect(readMeWithoutRepo$).toBeObservable(expectedRepoReadMe$);
+  });
+
+  it('should update repository description', () => {
+    const userLogin = 'userLoginName';
+    const initialRepo: Repository = {
+      name: 'repo_1',
+      description: 'description',
+      owner: { login: userLogin },
+      updated_at: new Date().toDateString()
+    };
+    const updatedRepo: Repository = {
+      name: 'repo_1',
+      description: 'new description',
+      owner: { login: userLogin },
+      updated_at: new Date().toDateString()
+    };
+
+    const expectedRepo$ = cold('a', { a: updatedRepo });
+    dataServiceSpy.updateRepository.and.returnValue(expectedRepo$);
+    const repo$ = service.updateRepositoryDescription(
+      initialRepo.owner.login,
+      initialRepo.name,
+      updatedRepo.description
+    );
+    expect(repo$).toBeObservable(expectedRepo$);
   });
 });

@@ -1,4 +1,4 @@
-<ng-container *ngIf="repository$ | async as repository">
+<ng-container *ngIf="repository">
 
   <div class="repo__header">
     <a class="header__link"
@@ -16,18 +16,18 @@
        class="repo__description">
     <div class="desc__wrapper">
       <div class="desc__content"
-           (click)="switchToEditMode()">
+           (click)="switchEditMode()">
         {{ description || repository.description }}
       </div>
       <button pButton
               type="button"
               label="Edit"
-              (click)="switchToEditMode()">
+              (click)="switchEditMode()">
       </button>
     </div>
     <div class="repo__warning"
-         *ngIf="description && repository.description !== description">
-      The latest updates weren’t saved
+         *ngIf="warningMessage">
+      {{ warningMessage }}
     </div>
   </div>
   <ng-template #editTemplate>
@@ -36,19 +36,18 @@
              type="text"
              pInputText
              autofocus
-             [ngModel]="description || repository.description"
-             (ngModelChange)="updateDescription($event)">
+             [(ngModel)]="description">
       <div class="editor__actions">
         <button pButton
                 type="button"
                 label="Save"
-                (click)="saveDescription(repository)">
+                (click)="saveDescription()">
         </button>
         <button pButton
                 type="reset"
                 label="Cancel"
                 class="ui-button-secondary"
-                (click)="cancelEditDescription(repository)">
+                (click)="cancelEditDescription()">
         </button>
       </div>
     </div>
@@ -74,3 +73,37 @@
   </div>
 
 </ng-container>
+
+<p-dialog header="Access token"
+          [(visible)]="displayAccessDialog"
+          [modal]="true"
+          [closable]="false">
+  <div class="repo__token">
+    Please enter your personal access token. If you don't have an access token you can create it on
+    <a href="https://github.com/settings/tokens"
+       target="_blank">
+      GitHub
+    </a>.
+    <input #inpAccessToken
+           tabindex="0"
+           type="text"
+           pInputText
+           autofocus>
+  </div>
+  <p-footer>
+    <button type="button"
+            pButton
+            icon="pi pi-check"
+            [disabled]="!inpAccessToken.value"
+            (click)="updateAccessToken(inpAccessToken.value); saveDescription();"
+            label="Yes">
+    </button>
+    <button type="button"
+            pButton
+            icon="pi pi-times"
+            (click)="hideAccessDialog()"
+            label="No"
+            class="ui-button-secondary">
+    </button>
+  </p-footer>
+</p-dialog>

@@ -175,4 +175,50 @@ describe('Service: Data', () => {
       request.flush(testData);
     }
   ));
+
+  it('should update repository', inject(
+    [DataService],
+    (service: DataService) => {
+      const userLogin = 'userLoginName';
+      const initialRepo: Repository = {
+        name: 'repo_1',
+        description: 'description',
+        owner: { login: userLogin },
+        updated_at: new Date().toDateString()
+      };
+      const updatedRepo: Repository = {
+        name: 'repo_1',
+        description: 'new description',
+        owner: { login: userLogin },
+        updated_at: new Date().toDateString()
+      };
+
+      const testUrl =
+        service.githubApiUrl +
+        `repos/${initialRepo.owner.login}/${initialRepo.name}`;
+      service.setAccessToken('access_token_value');
+      service
+        .updateRepository(
+          initialRepo.owner.login,
+          initialRepo.name,
+          updatedRepo
+        )
+        .subscribe(data => {
+          expect(data).toEqual(updatedRepo);
+          expect(data).not.toEqual(initialRepo);
+        });
+
+      const request = httpTestingController.expectOne(
+        (req: HttpRequest<Repository>) =>
+          req.url === testUrl &&
+          req.headers.has('Accept') &&
+          req.headers.get('Accept') === 'application/vnd.github.v3+json' &&
+          req.headers.has('authorization') &&
+          req.headers.get('authorization') === 'token access_token_value'
+      );
+
+      expect(request.request.method).toEqual('PATCH');
+      request.flush(updatedRepo);
+    }
+  ));
 });
